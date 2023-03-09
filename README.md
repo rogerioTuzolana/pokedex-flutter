@@ -6,4 +6,6 @@ Aplicativo para vizualização de pokemons.
 
 Versão atual
 
-![image](screen/img.jpg){:height="100px" width="100px"}.
+--![image](screen/img.jpg | width)
+
+<img src="https://github.com/rogerioTuzolana/pokedex-flutter/blob/main/screen/img.jpg" width="200" height="400" />
