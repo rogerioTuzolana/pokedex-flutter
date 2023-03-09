@@ -6,4 +6,4 @@ Aplicativo para vizualização de pokemons.
 
 Versão atual
 
-![](screen/img.jpg)
+![image](screen/img.jpg){:height="100px" width="100px"}.
