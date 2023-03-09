@@ -6,5 +6,5 @@ Aplicativo para vizualização de pokemons.
 
 Versão atual
 <div style="width: 250px; height: 350px">
-![alt text](screen/img.jpg)
+![](screen/img.jpg)
 </div>
