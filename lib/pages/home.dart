@@ -18,14 +18,26 @@ enum navigatorOptions{
 
 class _HomePageState extends State<HomePage> {
   var currentPage = navigatorOptions.pokedex;
+  final PageController controller = PageController();
+  int currentIndex = 0;
+  List<String> pokemons = [
+    "images/charizad.png",
+    "images/charizad2.png",
+    "images/blastoise.png",
+    "images/blastoise2.png",
+    "images/venusaur.png",
+    "images/venusaur2.png",
+  ];
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: body(size),
       bottomNavigationBar: SafeArea(
         child: Container(
-          
+          height: size.height * 0.08,
           padding: EdgeInsets.all(12),
           margin: EdgeInsets.symmetric(horizontal: 8),
           decoration: BoxDecoration(
@@ -106,33 +118,162 @@ class _HomePageState extends State<HomePage> {
   body(Size size){
     return
     Container(
+      height: size.height,
       color: Colors.white,
       child: Column(
         children: [
           Container(
             //margin: EdgeInsets.all(100),
-            height: size.height * 0.3,
+            height: size.height * 0.4,
             decoration: BoxDecoration(
-              color: Colors.blueAccent,
-              //shape: BoxShape.circle,
-              borderRadius: BorderRadius.only(
+              color: Colors.white//Color.fromARGB(255, 150, 120, 120),
+              /*borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(70),
                 bottomRight: Radius.circular(70),
-              ),
-              
+              ), */
             ),
+            child: Stack(
+              alignment: AlignmentDirectional.topCenter,
+              children: [
+                Container(
+                  height: size.height * 0.25,
+                  //margin: EdgeInsets.only(left: 10,right: 10,top: size.height * 0.06),
+                  decoration: BoxDecoration(
+                    color: Colors.blueAccent,//Color.fromARGB(255, 148, 152, 160),
+                    //shape: BoxShape.circle,
+                    /*borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(70),
+                      bottomRight: Radius.circular(70),
+                    ), */
+                  ),
+                  
+                ),
+                Positioned(
+                  child: Container(
+                    margin: EdgeInsets.only(top: size.height * 0.24),
+                    height: size.height * 0.1,
+                    decoration: BoxDecoration(
+                      color: Colors.blueAccent,//Color.fromARGB(255, 94, 108, 138),
+                      //shape: BoxShape.circle,
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(200),
+                        bottomRight: Radius.circular(200),
+                      ), 
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 40,
+                  width: size.width*0.90,
+                  
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                    
+                      InkWell(
+                        child: Icon(Icons.arrow_back_ios,color: Colors.white,size: 22,),
+                        onTap: () {
+                        
+                        },
+                      ),
+                      InkWell(
+                        child: Icon(Icons.favorite_border,color: Colors.white,size: 22,),
+                        onTap: () {
+                          
+                        },
+                      )
+                      
+                    ],
+                  ), 
+                ),
+                Positioned(
+                  
+                  child: Container(
+                    margin: EdgeInsets.only(top: size.height * 0.1),
+                    height: 300,
+                    width: size.width,
+                    child: PageView.builder(
+                      controller: controller,
+                      onPageChanged: (index){
+                        setState(() {
+                          currentIndex = index % pokemons.length;
+                          print(currentIndex);
+                        });
+          
+                      },
+                      itemBuilder: (context, index){
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Image.asset(
+                          pokemons[index % pokemons.length]
+                        ),
+                      );
+                    }),
+                  )
+                ),
+                Positioned(
+                  top: size.height * 0.3,
+                  width: size.width*0.85,
+                  
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          controller.jumpToPage(currentIndex - 1);
+                        },
+                        child: Icon(Icons.arrow_back_ios,color: Colors.black87,size: 17,),
+                        style: ButtonStyle(
+                          shape: MaterialStateProperty.all(CircleBorder()),
+                          padding: MaterialStateProperty.all(EdgeInsets.all(10)),
+                          backgroundColor: MaterialStateProperty.all(Colors.white), 
+                          //shadowColor: MaterialStateProperty.all(Colors.black87)// <-- Button color
+                          
+                        ),
+                      ),
+                      /*IconButton(
+                        icon: Icon(Icons.arrow_back_ios,color: Colors.white,size: 22,),
+                        onPressed: () {
+                        
+                        },
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.arrow_forward_ios,color: Colors.white,size: 22,),
+                        onPressed: () {
+                          
+                        },
+                      ),*/
+                      ElevatedButton(
+                        onPressed: () {
+                          controller.jumpToPage(currentIndex + 1);
+                        },
+                        child: Icon(Icons.arrow_forward_ios,color: Colors.black,size: 17,),
+                        style: ButtonStyle(
+                          shape: MaterialStateProperty.all(CircleBorder()),
+                          padding: MaterialStateProperty.all(EdgeInsets.all(10)),
+                          backgroundColor: MaterialStateProperty.all(Colors.white), // <-- Button color
+                          
+                        ),
+                      )
+                      
+                    ],
+                  ), 
+                ),
+              ],
+            )
+              
           ),
           Container(
-            //height: size.height * 0.7,
+            height: size.height * 0.5,
             child: Column(
               children: [
                 Container(
-                  margin: EdgeInsets.only(top: 20,left: 15),
+                  margin: EdgeInsets.only(left: 15),
                   alignment: Alignment.topLeft,
-                  child: Text("Venusaur",style: 
+                  child: Text("Charizard",style: 
                     TextStyle(
                       color: Colors.black87,
-                      fontSize: 22,
+                      fontSize: 25,
                       fontWeight: FontWeight.bold,
                       decoration: TextDecoration.none,
                     ),
@@ -172,7 +313,7 @@ class _HomePageState extends State<HomePage> {
                               color: Colors.white,
                               shape: BoxShape.circle,
                             ),
-                            child: Icon(Icons.fire_hydrant_alt_rounded,)
+                            child: /*Image.asset("images/fire.png")*/Icon(Icons.energy_savings_leaf)
                           ),
                           
                           Text(" Fogo",style:
@@ -204,10 +345,10 @@ class _HomePageState extends State<HomePage> {
                               color: Colors.white,
                               shape: BoxShape.circle,
                             ),
-                            child: Icon(Icons.icecream_rounded,)
+                            child: Icon(Icons.energy_savings_leaf)
                           ),
                           
-                          Text(" Gelo",style: 
+                          Text(" Voador",style: 
                             TextStyle(
                               color: Color.fromARGB(221, 44, 43, 43),
                               fontSize: 14,
@@ -387,8 +528,8 @@ class _HomePageState extends State<HomePage> {
                       Container(
                         margin: EdgeInsets.only(left: 15),
                         child: Row(
-                          children: const [
-                            Icon(Icons.person,size: 14,),
+                          children: [
+                            Image.asset("images/pokeball2.png",width: 14,height: 14,),
                             Text(" HABILIDADE",style: TextStyle(
                                 color: Color.fromARGB(221, 44, 43, 43),
                                 fontSize: 13,
